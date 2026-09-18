@@ -1,25 +1,32 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Any, Dict, Optional
 import uuid
 
 
-@dataclass
 class InspectionContext:
-    project_id: str
-    pipeline_id: str
-    device_id: str
-    cycle_id: str = field(default_factory=lambda: uuid.uuid4().hex)
-    started_at: str = field(
-        default_factory=lambda: datetime.now(timezone.utc).isoformat()
-    )
-    camera_id: Optional[str] = None
-    frames: Dict[str, Any] = field(default_factory=dict)
-    detections: Dict[str, Any] = field(default_factory=dict)
-    results: Dict[str, Any] = field(default_factory=dict)
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    """Shared data container for one inspection cycle (Python 3.6 compatible)."""
+
+    def __init__(
+        self,
+        project_id: str,
+        pipeline_id: str,
+        device_id: str,
+        cycle_id: Optional[str] = None,
+        started_at: Optional[str] = None,
+        camera_id: Optional[str] = None,
+    ):
+        self.project_id = project_id
+        self.pipeline_id = pipeline_id
+        self.device_id = device_id
+        self.cycle_id = cycle_id or uuid.uuid4().hex
+        self.started_at = started_at or datetime.utcnow().isoformat() + "Z"
+        self.camera_id = camera_id
+        self.frames = {}
+        self.detections = {}
+        self.results = {}
+        self.metadata = {}
 
     def for_camera(self, camera_id: str) -> "InspectionContext":
         child = InspectionContext(
