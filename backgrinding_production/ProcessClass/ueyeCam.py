@@ -39,12 +39,15 @@ class UeyeCamera:
     self.is_reconnecting = False
 
   def is_connected(self) -> bool:
+    """Check this camera handle, not merely whether any uEye camera exists."""
     if not self.hCamConnected or self.hCam.value == 0:
       return False
     try:
-      num_cam = ueye.INT(0)
-      ret = ueye.is_GetNumberOfCameras(num_cam)
-      return ret == ueye.IS_SUCCESS and num_cam.value > 0
+      ret = ueye.is_GetCameraInfo(self.hCam, self.cInfo)
+      if ret != ueye.IS_SUCCESS:
+        self.hCamConnected = False
+        return False
+      return True
     except Exception:
       self.hCamConnected = False
       return False
