@@ -54,14 +54,17 @@ class API_CALL():
                 print(f'ERROR {e}')
                 return False
 
-    async def newAlarm(self,imagebase64 :str = None , detection_info :str = None):
+    async def newAlarm(self,imagebase64 :str = None , detection_info :str = None, cycle_id=None, camera_id=None, pipeline_id=None):
         self.api_key =  self.config.api_key
         async with httpx.AsyncClient(timeout=10) as client:
             url = f'{self.url}/image_log'
             header ={"X-API-Key":self.api_key}
             payload = {
                 'image':imagebase64,
-                'detected_objects':str(detection_info)
+                'detected_objects':str(detection_info),
+                'cycle_id': cycle_id,
+                'camera_id': camera_id,
+                'pipeline_id': pipeline_id,
             }
             try:
                 res = await client.post(url=url,headers=header,json=payload)
