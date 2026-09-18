@@ -38,6 +38,10 @@ class BackgrindConfig():
                     {"id": "validate", "type": "validate"},
                     {"id": "decision", "type": "decision"},
                 ],
+            },
+            "stream_only": {
+                "mode": "shared",
+                "steps": [{"id": "stream", "type": "stream_only"}]
             }
         }
         self.api_key = "api_key"
