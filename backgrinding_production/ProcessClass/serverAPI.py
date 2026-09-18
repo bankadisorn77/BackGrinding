@@ -23,7 +23,18 @@ class API_CALL():
                 },
                 'model_path':self.config.model_path,
                 'save_image_path':self.config.save_image_path,
-                'mqtt_broker':self.config.MQTTServer
+                'mqtt_broker':self.config.MQTTServer,
+                'project_id': self.config.project_id,
+                'camera_config': self.config.cameras,
+                'project_config': {'project_id': self.config.project_id, 'pipelines': self.config.pipelines},
+                'io_config': {
+                    'input': {'trigger': self.config.inputChannel},
+                    'output': {
+                        'alarm': self.config.outputAlarm,
+                        'relay': self.config.outputContor,
+                        'state_machine': self.config.outputStateMachine,
+                    },
+                },
             }
             try:
                 res = await client.post(url=url,json=payload)
