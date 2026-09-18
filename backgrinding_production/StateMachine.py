@@ -518,8 +518,10 @@ class StateMachine:
 
     status_dict = {
         "camera": cam if cam is not None else ("ONLINE" if all_cam_ok else "ERROR"),
+        "camera_status": json.dumps(cam_details),
         "gpio": gpio if gpio is not None else ("ONLINE" if gpio_ok else "ERROR"),
         "program_status": self.program_status,
+        "project_status": self.program_status,
         "relay_status": self.relay_status,
         "light_status": self.light_status,
         "door_status": self.door_status,
