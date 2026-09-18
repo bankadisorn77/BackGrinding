@@ -27,7 +27,7 @@ class BackgrindConfig():
         self.project_id = "backgrinding"
         self.cameras = [
             {"id": "cam_1", "driver": "ueye", "hardware_index": 0, "enabled": True, "pipeline": "backgrinding"},
-            {"id": "cam_2", "driver": "ueye", "hardware_index": 1, "enabled": True, "pipeline": "backgrinding"},
+            {"id": "cam_2", "driver": "ueye", "hardware_index": 1, "enabled": True, "pipeline": "stream_only"},
         ]
         self.pipelines = {
             "backgrinding": {
