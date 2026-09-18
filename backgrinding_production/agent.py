@@ -319,3 +319,5 @@ if __name__ == "__main__":
   except Exception as e:
     print(f"[AGENT FATAL ERROR]: {e}")
     a.cleanup()
+
+    # [MAIN CALLBACK] Got real-time event from RAM: {'status': {'camera': 'ONLINE', 'gpio': 'ONLINE', 'program_status': 'RUNNING', 'relay_status': 'OFF', 'light_status': 'ON', 'door_status': 'CLOSED', 'alarm_status': 'OFF', 'last_update': 1789718230.305998, 'camera_1': 'ONLINE', 'camera_2': 'ONLINE'}}
