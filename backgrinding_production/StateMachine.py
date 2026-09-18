@@ -358,7 +358,13 @@ class StateMachine:
     frame = context.frames.get(context.camera_id)
     if frame is None:
       return False
-    response = self.detector.detect_image(frame, json_safe=True)
+    response = self.detector.detect_image(
+        frame,
+        json_safe=True,
+        cycle_id=context.cycle_id,
+        camera_id=context.camera_id,
+        pipeline_id=context.pipeline_id,
+      )
     detections = response.get("result", []) if response else []
     context.detections[context.camera_id] = detections
     return detections
