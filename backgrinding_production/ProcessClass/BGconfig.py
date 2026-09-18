@@ -24,6 +24,22 @@ class BackgrindConfig():
         self.server_url = "localhost"
         self.model_path = "Yolov12best_bg_v2_openvino_model"
         self.save_image_path = "saved_images_output"
+        self.project_id = "backgrinding"
+        self.cameras = [
+            {"id": "cam_1", "driver": "ueye", "hardware_index": 0, "enabled": True, "pipeline": "backgrinding"},
+            {"id": "cam_2", "driver": "ueye", "hardware_index": 1, "enabled": True, "pipeline": "backgrinding"},
+        ]
+        self.pipelines = {
+            "backgrinding": {
+                "mode": "shared",
+                "steps": [
+                    {"id": "capture", "type": "capture"},
+                    {"id": "detect", "type": "detect"},
+                    {"id": "validate", "type": "validate"},
+                    {"id": "decision", "type": "decision"},
+                ],
+            }
+        }
         self.api_key = "api_key"
         self.loadConfig()
         self.setnewConfig({'ip':self.ip_addres,'mac':self.mac_addres})
@@ -44,6 +60,9 @@ class BackgrindConfig():
             model_path = newParam.get('model_path',self.model_path)
             save_image_path = newParam.get('save_image_path',self.save_image_path)
             api_key = newParam.get('api_key',self.api_key)
+            project_id = newParam.get('project_id', self.project_id)
+            cameras = newParam.get('cameras', self.cameras)
+            pipelines = newParam.get('pipelines', self.pipelines)
 
             self.device_id = device_id
             self.ip = ip 
@@ -58,6 +77,9 @@ class BackgrindConfig():
             self.model_path = model_path
             self.save_image_path = save_image_path
             self.api_key = api_key
+            self.project_id = project_id
+            self.cameras = cameras
+            self.pipelines = pipelines
             self.saveconfig()
         except Exception as e:
             print(f'Config format not correct !!! (ERROR : {e})')
@@ -77,7 +99,10 @@ class BackgrindConfig():
                     "server_url": self.server_url,
                     "model_path":self.model_path,
                     "save_image_path":self.save_image_path,
-                    "api_key":self.api_key
+                    "api_key":self.api_key,
+                    "project_id":self.project_id,
+                    "cameras":self.cameras,
+                    "pipelines":self.pipelines
      
                 }
 
@@ -106,7 +131,10 @@ class BackgrindConfig():
                         "server_url": self.server_url,
                         "model_path":self.model_path,
                         "save_image_path":self.save_image_path,
-                        "api_key":self.api_key                    }
+                        "api_key":self.api_key,
+                        "project_id":self.project_id,
+                        "cameras":self.cameras,
+                        "pipelines":self.pipelines                    }
            
             if not os.path.exists(config_dir):
                 json_data = json.dumps(param, indent=2)
@@ -128,6 +156,9 @@ class BackgrindConfig():
                 self.model_path = str(param['model_path'])
                 self.save_image_path = str(param['save_image_path'])
                 self.api_key = str(param['api_key'])
+                self.project_id = str(param.get('project_id', self.project_id))
+                self.cameras = param.get('cameras', self.cameras)
+                self.pipelines = param.get('pipelines', self.pipelines)
         except:
             self.saveconfig()
         return param
@@ -148,7 +179,10 @@ class BackgrindConfig():
             "server_url": self.server_url,
             "model_path":self.model_path,
             "save_image_path":self.save_image_path,
-            "api_key":self.api_key
+            "api_key":self.api_key,
+            "project_id":self.project_id,
+            "cameras":self.cameras,
+            "pipelines":self.pipelines
         }
         
         json_data = json.dumps(param, indent=2)
