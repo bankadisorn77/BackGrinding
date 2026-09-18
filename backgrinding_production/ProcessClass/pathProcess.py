@@ -8,7 +8,7 @@ def getdatetime1():
 
 def getdatetime():
     now = datetime.today()
-    return now.strftime("%Y-%m-%d-%H-%M-%S-%MS")
+    return now.strftime("%Y-%m-%d-%H-%M-%S-%f")
 
 class StatusLevel(enum.Enum):
     INFO = 1
