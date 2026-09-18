@@ -1,0 +1,18 @@
+{
+  "device_id": "UTL-Ai-BG_(Dev)",
+  "ip": "169.254.218.20",
+  "mac": "FC:6D:77:53:3B:2F",
+  "inputChannel": 0,
+  "outputAlarm": 0,
+  "outputContor": 1,
+  "outputStateMachine": 2,
+  "cameraAOI": {
+    "width": 1920,
+    "height": 1080
+  },
+  "MQTTServer": "169.254.26.65",
+  "server_url": "169.254.26.65",
+  "model_path": "Yolov12best_bg_v2_openvino_model",
+  "save_image_path": "saved_images_output",
+  "api_key": "cfdbd4ab6393c2cb6033f672ae4ad703"
+}

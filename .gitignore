@@ -1,0 +1,15 @@
+Set-Content -Path .gitignore -Value @"
+# Environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.env
+.venv
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+"@
