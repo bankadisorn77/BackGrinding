@@ -175,7 +175,7 @@ class Detector:
           
     return results
   
-  def detect_image(self, image: np.ndarray, timestamp=None, json_safe=False):
+  def detect_image(self, image: np.ndarray, timestamp=None, json_safe=False, cycle_id=None, camera_id=None, pipeline_id=None):
     if image is None:
       return []
 
@@ -274,7 +274,14 @@ class Detector:
           for ((x1, y1), (x2, y2), label_str) in detections
       ]
     try:
-      asyncio.run(self.api.newAlarm(img,str(detections)))
+      if self.api is not None:
+        asyncio.run(self.api.newAlarm(
+            img,
+            str(detections),
+            cycle_id=cycle_id,
+            camera_id=camera_id,
+            pipeline_id=pipeline_id,
+        ))
     except Exception:
       print('Failed Send image')
     return {"result":detections}
