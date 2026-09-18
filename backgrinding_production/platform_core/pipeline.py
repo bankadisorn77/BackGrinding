@@ -1,18 +1,14 @@
 from __future__ import annotations
 
-from typing import Any, Callable, Dict, List
+from typing import Any, Callable, Dict, List, Optional
 
 from .context import InspectionContext
 
 
 class PipelineEngine:
-    """Small data-driven pipeline runner.
+    """Generic sequential pipeline runner (Python 3.6 compatible)."""
 
-    The engine is intentionally unaware of YOLO, OCR, BackGrinding rules, etc.
-    Project code registers handlers for project-specific step types.
-    """
-
-    def __init__(self, handlers: Dict[str, Callable] | None = None):
+    def __init__(self, handlers: Optional[Dict[str, Callable]] = None):
         self.handlers = dict(handlers or {})
 
     def register(self, step_type: str, handler: Callable):
@@ -22,7 +18,7 @@ class PipelineEngine:
         self,
         definition: Dict[str, Any],
         context: InspectionContext,
-        camera_ids: List[str] | None = None,
+        camera_ids: Optional[List[str]] = None,
     ) -> InspectionContext:
         mode = definition.get("mode", "shared")
         targets = camera_ids or definition.get("cameras") or []
@@ -30,10 +26,7 @@ class PipelineEngine:
         if mode == "per_camera":
             for camera_id in targets:
                 camera_context = context.for_camera(camera_id)
-                self._run_steps(
-                    definition.get("steps", []),
-                    camera_context,
-                )
+                self._run_steps(definition.get("steps", []), camera_context)
         else:
             self._run_steps(definition.get("steps", []), context)
 
@@ -52,10 +45,9 @@ class PipelineEngine:
 
             handler = self.handlers.get(step_type)
             if handler is None:
-                raise KeyError(f"Unknown pipeline step: {step_type}")
+                raise KeyError("Unknown pipeline step: {}".format(step_type))
 
             result = handler(context, step)
             if result is not None:
                 step_id = step.get("id") or step_type
                 context.metadata.setdefault("steps", {})[step_id] = result
-
