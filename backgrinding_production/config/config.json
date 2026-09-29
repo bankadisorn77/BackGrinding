@@ -1,0 +1,74 @@
+{
+  "device_id": "UTL-Ai-SFS(Dev)",
+  "ip": "169.254.99.8",
+  "mac": "70:9C:D1:22:82:6F",
+  "inputChannel": 0,
+  "outputAlarm": 0,
+  "outputContor": 1,
+  "outputStateMachine": 2,
+  "cameraAOI": {
+    "width": 1920,
+    "height": 1080
+  },
+  "MQTTServer": "169.254.217.83",
+  "server_url": "169.254.217.83",
+  "model_path": "Yolov12best_bg_v2_openvino_model",
+  "save_image_path": "saved_images_output",
+  "api_key": "74807a1bdc6fadbc6e39211d33afa058",
+  "project_id": "backgrinding",
+  "cameras": [
+    {
+      "id": "cam_1",
+      "driver": "ueye",
+      "hardware_index": 0,
+      "enabled": true,
+      "pipeline": "backgrinding"
+    },
+    {
+      "id": "cam_2",
+      "driver": "ueye",
+      "hardware_index": 1,
+      "enabled": true,
+      "pipeline": "stream_only"
+    },
+    {
+      "id": "cam_3",
+      "driver": "ueye",
+      "hardware_index": 2,
+      "enabled": true,
+      "pipeline": "stream_only"
+    }
+  ],
+  "pipelines": {
+    "backgrinding": {
+      "mode": "shared",
+      "steps": [
+        {
+          "id": "capture",
+          "type": "capture"
+        },
+        {
+          "id": "detect",
+          "type": "detect"
+        },
+        {
+          "id": "validate",
+          "type": "validate"
+        },
+        {
+          "id": "decision",
+          "type": "decision"
+        }
+      ]
+    },
+    "stream_only": {
+      "mode": "shared",
+      "steps": [
+        {
+          "id": "stream",
+          "type": "stream_only"
+        }
+      ]
+    }
+  }
+}

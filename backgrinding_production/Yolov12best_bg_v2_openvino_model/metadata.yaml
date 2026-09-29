@@ -1,0 +1,33 @@
+description: Ultralytics YOLOv12n model trained on data/BGV2/data.yaml
+author: Ultralytics
+date: '2026-08-14T09:50:30.831582+07:00'
+version: 8.4.120
+license: AGPL-3.0 License (https://ultralytics.com/license)
+docs: https://docs.ultralytics.com
+stride: 32
+task: detect
+head: Detect
+batch: 1
+imgsz:
+- 640
+- 640
+names:
+  0: Cshape
+  1: DSC6inch
+  2: DSC8inch
+  3: None
+  4: STD5inch
+  5: STD6inch
+  6: STD8inch
+  7: Universal
+  8: Ushape
+  9: STD4inch
+args:
+  data: null
+  batch: 1
+  fraction: 1.0
+  quantize: null
+  dynamic: false
+  nms: false
+channels: 3
+end2end: false
