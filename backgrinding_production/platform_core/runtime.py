@@ -8,6 +8,7 @@ from .camera_manager import CameraManager
 from .pipeline import PipelineEngine
 from .project import ProjectAdapter
 from .health import HealthMonitor
+from .camera_manager import CameraManager
 
 logger = logging.getLogger("PlatformRuntime")
 
@@ -21,8 +22,13 @@ class PlatformRuntime:
     ):
         self.project = project
         self.pipeline_engine = PipelineEngine()
-        self.camera_manager = camera_manager
         self.health_monitor = health_monitor
+        if camera_manager is not None:
+            self.camera_manager = camera_manager
+        else:
+            cam_defs = self.project.camera_definition()
+            self.camera_manager = CameraManager.from_definitions(cam_defs)
+
 
         self._register_handlers()
 

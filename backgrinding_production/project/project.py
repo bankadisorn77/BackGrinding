@@ -3,11 +3,12 @@ from typing import Dict, Any, Callable, List
 from platform_core.project import ProjectAdapter
 from platform_core.context import InspectionContext
 
+# from ProcessClass.ueyeCam import UeyeCamera
 
 class BackGrindingProject(ProjectAdapter):
     project_id = "backgrinding"
 
-    def __init__(self, detector, analysis, config=None):
+    def __init__(self, detector=None, analysis=None, config=None):
         self.detector = detector
         self.analysis = analysis
         self.config = config

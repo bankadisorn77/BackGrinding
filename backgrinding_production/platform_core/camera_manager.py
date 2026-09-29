@@ -3,6 +3,8 @@ from __future__ import annotations
 import time
 from typing import Any, Dict
 
+from ProcessClass.ueyeCam import UeyeCamera
+
 
 
 class CameraManager:
@@ -15,6 +17,15 @@ class CameraManager:
 
     def ids(self):
         return list(self.cameras.keys())
+
+    @classmethod
+    def from_definitions(cls,camera_definitions: list) -> "CameraManager":
+        cameras = {}
+        for cam_info in camera_definitions:
+            cam_id = str(cam_info.get('id','cam_1'))
+            hw_index = int(cam_info.get('hardware_index',0))
+            cameras[cam_id] = UeyeCamera(camera_id=hw_index)
+        return cls(cameras)
 
     def connect_all(self, width: int, height: int, fps: int = 15) -> bool:
         ok = True
