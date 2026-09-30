@@ -15,7 +15,6 @@ from .communication import PlatformStatusReporter
 
 logger = logging.getLogger("PlatformRuntime")
 
-
 class PlatformRuntime:
     def __init__(
         self,
