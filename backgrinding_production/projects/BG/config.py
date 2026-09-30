@@ -25,6 +25,7 @@ class BGConfig:
         self.model_path = str(root / "Yolov12best_bg_v2_openvino_model")
         self.save_image_path = str(root / "saved_images_output")
         self.api_key = "api_key"
+        self.stop_flag_path = str(root.parent / "stop_worker.flag")
         self.cameras = [
             {"id": "cam_1", "driver": "ueye", "hardware_index": 0, "enabled": True, "pipeline": "backgrinding"},
             {"id": "cam_2", "driver": "ueye", "hardware_index": 1, "enabled": True, "pipeline": "stream_only"},
@@ -71,7 +72,7 @@ class BGConfig:
                 data = json.load(f)
             for name in (
                 "device_id", "ip", "mac", "MQTTServer", "server_url",
-                "model_path", "save_image_path", "api_key", "project_id",
+                "model_path", "save_image_path", "api_key", "project_id", "stop_flag_path",
             ):
                 if name in data:
                     setattr(self, name, data[name])
@@ -103,6 +104,7 @@ class BGConfig:
             "model_path": self.model_path,
             "save_image_path": self.save_image_path,
             "api_key": self.api_key,
+            "stop_flag_path": self.stop_flag_path,
             "project_id": self.project_id,
             "cameras": self.cameras,
             "pipelines": self.pipelines,
