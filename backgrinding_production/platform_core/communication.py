@@ -2,26 +2,38 @@
 import time
 import logging
 from typing import Dict, Any
-from ProcessClass.pipe import sender
 
 logger = logging.getLogger("Communication")
 
+try:
+    from ProcessClass.pipe import sender as _SharedMemorySender
+except Exception:
+    _SharedMemorySender = None
+
+
 class PlatformStatusReporter:
+    """Reports platform status without making shared-memory support mandatory."""
     def __init__(self):
-        try:
-            self.sender = sender()
-        except Exception as e:
-            logger.warning(f"Shared memory sender initialization failed: {e}")
-            self.sender = None
+        self.sender = None
+        if _SharedMemorySender is not None:
+            try:
+                self.sender = _SharedMemorySender()
+            except Exception as exc:
+                logger.warning("Shared memory sender initialization failed: %s", exc)
 
     def report(self, payload: Dict[str, Any]):
         if self.sender:
-            payload["last_update"] = time.time()
-            self.sender.send_event({"status": payload})
+            data = dict(payload)
+            data["last_update"] = time.time()
+            try:
+                self.sender.send_event({"status": data})
+            except Exception as exc:
+                logger.warning("Status report failed: %s", exc)
 
     def close(self):
         if self.sender:
             try:
                 self.sender.close()
-            except Exception as e:
-                logger.warning(f"Error closing sender: {e}")
+            except Exception:
+                pass
+            self.sender = None
