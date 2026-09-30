@@ -3,8 +3,6 @@ from typing import Dict, Any, Callable, List
 from platform_core.project import ProjectAdapter
 from platform_core.context import InspectionContext
 
-# from ProcessClass.ueyeCam import UeyeCamera
-
 class BackGrindingProject(ProjectAdapter):
     project_id = "backgrinding"
 

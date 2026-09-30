@@ -21,8 +21,8 @@ class GPIO:
             err, _ = self.di_ctrl.readBit(0, 0)
             if err == ErrorCode.Success:
                 self.is_connected = True
+                
                 print(f"[GPIO] Connected successfully to {self.device}")
-                return True
             else:
                 self.is_connected = False
                 return False
