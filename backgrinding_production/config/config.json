@@ -63,5 +63,7 @@
         }
       ]
     }
-  }
+  },
+  "api_port": 8080,
+  "stop_flag_path": "stop_worker.flag"
 }
