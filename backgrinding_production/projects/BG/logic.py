@@ -1,6 +1,3 @@
-from __future__ import annotations
-
-
 class BGLogic:
     """BackGrinding business rules. Hardware access stays outside this class."""
 
