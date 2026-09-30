@@ -14,10 +14,12 @@ def main():
     project = BackGrindingProject()
     runtime = PlatformRuntime(project=project)
     try:
-        runtime.start(
+        ready = runtime.start(
             width=project.config.width,
             height=project.config.height,
         )
+        if not ready:
+            raise RuntimeError("BG hardware is not ready (uEye/USB-4761).")
         runtime.run()
     except KeyboardInterrupt:
         logging.getLogger("MAIN").info("Stopping system by user.")
