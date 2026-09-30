@@ -82,6 +82,8 @@ class BGConfig:
             ):
                 if name in data:
                     setattr(self, name, int(data[name]))
+            if not os.path.isabs(self.stop_flag_path):
+                self.stop_flag_path = str(root.parent / self.stop_flag_path)
             self.cameraAOI = data.get("cameraAOI", self.cameraAOI)
             self.cameras = data.get("cameras", self.cameras)
             self.pipelines = data.get("pipelines", self.pipelines)
