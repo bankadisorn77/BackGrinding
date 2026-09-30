@@ -6,7 +6,6 @@ from .context import InspectionContext
 
 
 class ProjectAdapter(ABC):
-
     @property
     @abstractmethod
     def project_id(self) -> str:
@@ -29,5 +28,11 @@ class ProjectAdapter(ABC):
     def status_payload(self) -> Dict[str, Any]:
         return {}
 
+    def storage_definition(self) -> Dict[str, Any]:
+        return {}
+
+    def run(self, runtime):
+        raise NotImplementedError
+
     def run_pipeline(self, pipeline_id: str, context: InspectionContext):
-        pass
+        return None
