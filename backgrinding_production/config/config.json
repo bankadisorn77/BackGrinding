@@ -30,13 +30,6 @@
       "hardware_index": 1,
       "enabled": true,
       "pipeline": "stream_only"
-    },
-    {
-      "id": "cam_3",
-      "driver": "ueye",
-      "hardware_index": 2,
-      "enabled": true,
-      "pipeline": "stream_only"
     }
   ],
   "pipelines": {
