@@ -1,6 +1,3 @@
-from __future__ import annotations
-
-
 class BGIO:
     def __init__(self, io_manager, config):
         self.io = io_manager
