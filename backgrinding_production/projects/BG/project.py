@@ -1,4 +1,5 @@
 import logging
+import os
 import time
 from pathlib import Path
 from typing import Dict, Any, Callable, List
@@ -123,6 +124,8 @@ class BackGrindingProject(ProjectAdapter):
         # Legacy BG behavior: wait for door-open, then door-close before an inspection.
         last_door = self.io.read_door()
         while True:
+            if self._stop_requested():
+                break
             door = self.io.read_door()
             self._last_status["door_status"] = "CLOSED" if door else "OPEN"
             runtime.update_status(**self._last_status)
@@ -131,6 +134,16 @@ class BackGrindingProject(ProjectAdapter):
                 self._run_inspection_cycle(runtime)
             last_door = door
             time.sleep(0.05)
+
+    def _stop_requested(self):
+        flag = self.config.stop_flag_path
+        if not os.path.exists(flag):
+            return False
+        try:
+            os.remove(flag)
+        except OSError:
+            pass
+        return True
 
     def _run_inspection_cycle(self, runtime):
         self._last_status["door_status"] = "CLOSED"
